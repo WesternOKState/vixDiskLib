@@ -5,7 +5,7 @@
 
 ## Requirements
 
-** The development version of python, pkg-config, and of course, the VDDK need to be installed.**
+**The development version of python, pkg-config, and of course, the VDDK need to be installed.**
 
 For Ubuntu users:
 
