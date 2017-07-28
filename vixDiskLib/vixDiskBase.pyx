@@ -38,7 +38,9 @@ cdef class VixDiskBase(VixBase):
     cdef VixDiskLibHandle handle
     cdef np.ndarray buff
     
-    def __init__(self, credentials=None, libdir=None, config=None, block_size=DEFAULT_BLOCK_SIZE, callback=None):
+    def __init__(self, credentials=None, libdir='/usr/lib/vmware-vix-disklib',
+                 config='/usr/etc/vddk.conf', block_size=DEFAULT_BLOCK_SIZE,
+                 callback=None):
         super(VixDiskBase, self).__init__(credentials, libdir, config, callback)
         
         self.vmdk_path = None
@@ -192,7 +194,7 @@ cdef class VixDiskBase(VixBase):
             
         if self.buff.size != nbytes:
             log.debug("Resizing buffer to %d" % nbytes)
-            self.buff.resize(nbytes)
+            self.buff = np.empty(nbytes, dtype=DTYPE)
             
         vix_error = VixDiskLib_Read(self.handle, sector_offset, sectors_to_read, <uint8 *>self.buff.data)
         if vix_error != VIX_OK:

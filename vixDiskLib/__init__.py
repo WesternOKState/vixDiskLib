@@ -52,14 +52,20 @@ from vixDisk import VixDisk
 VixDiskLib_SectorSize           = 512
 VixDiskLib_DefaultBlockSize     = 1048576
 VixDiskLib_SectorsPerBlock      = VixDiskLib_DefaultBlockSize/VixDiskLib_SectorSize
+DEFAULT_PORT = 902
+DEFAULT_THUMB = '51:23:4e:72:9f:22:c3:08:99:c1:b9:95:83:d8:b0:19'
+
 
 class VixCredentials(object):
     """ VixDiskLib Credentials to log into a vcenter or ESX server """
-    def __init__(self, vmxSpec, host, username, password):
+    def __init__(self, vmxSpec, host, username, password,
+                 port=DEFAULT_PORT, thumb=DEFAULT_THUMB):
         self.vmxSpec = vmxSpec
         self.host = host
         self.username = username
         self.password = password
+        self.port = port
+        self.thumb = thumb
 
 class VixDiskLib_CreateParams(object):
     """ Disk creation parameters """
@@ -71,21 +77,3 @@ class VixDiskLib_CreateParams(object):
 
     def __str__(self):
         return "%d, %d, %d, %d" % (self.disk_type, self.adapter_type, self.hw_version, self.blocks)
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

@@ -25,7 +25,8 @@ cdef void LogFunc(char *format, va_list args):
 
 cdef class VixBase(object):
     
-    def __init__(self, credentials=None, libdir=None, config=None, callback=None):
+    def __init__(self, credentials=None, libdir='/usr/lib/vmware-vix-disklib',
+                 config='/usr/etc/vddk.conf', callback=None):
         """
         vixBase - Setup, and connect to the vcenter or ESX server.  Note: vix-disklib 
         requires a vmspec to connect.
@@ -50,6 +51,7 @@ cdef class VixBase(object):
             self.params.creds.uid.password  = strdup(PyString_AsString(credentials.password))
             self.params.credType            = VIXDISKLIB_CRED_UID
             self.params.port                = 0
+            self.params.thumbPrint          = strdup(PyString_AsString(credentials.thumb))
             self.is_remote = True
         else:
             memset(&self.params, 0, sizeof(self.params))
@@ -211,7 +213,3 @@ cdef class VixBase(object):
                 doc="The location of the vix-disklib libraries.")
     config = property(_getconfig, _setconfig,
                 doc="The location of the vix-disklib configuration file.")
-        
-        
-        
-        

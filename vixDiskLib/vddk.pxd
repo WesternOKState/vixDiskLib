@@ -12,7 +12,8 @@ cdef extern from "vixDiskLib.h":
     ctypedef uint64 VixDiskLibSectorType
 
     cdef uint32 VIXDISKLIB_SECTOR_SIZE = 512
-    ctypedef enum VIXDISKLIB_OPEN_FLAGS:
+    # ctypedef enum VIXDISKLIB_OPEN_FLAGS:
+    ctypedef enum:
         VIXDISKLIB_FLAG_OPEN_UNBUFFERED  = 1, # disable host disk caching
         VIXDISKLIB_FLAG_OPEN_SINGLE_LINK = 2, # don't open parent disk(s)
         VIXDISKLIB_FLAG_OPEN_READ_ONLY   = 4 # open read-only
@@ -379,6 +380,7 @@ cdef extern from "vixDiskLib.h":
         VixDiskLibCredType credType
         VixDiskLibCreds creds
         uint32 port
+        char *thumbPrint
 
     ctypedef struct VixDiskLibInfo:
         VixDiskLibGeometry   biosGeo      # BIOS geometry for booting and partitioning
