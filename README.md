@@ -4,38 +4,54 @@
   [vixDiskLib](http://xuru.github.com/vixDiskLib) is a Python wrapper to access the [VMware Virtual Disk Development Kit API](http://communities.vmware.com/community/developer/forums/vddk).
 
 ## Requirements
-  # The development version of python, pkg-config, and of course, the VDDK need to be installed.
+
+**The development version of python, pkg-config, and of course, the VDDK need to be installed.**
+
+For Ubuntu users:
+
+* apt-get install pkg-config, python-dev
+* pip install cython, numpy
+
+If you find that when you try to import the module, you get an error something like:
+
+ImportError: libvixDiskLibVim.so.1: cannot open shared object file: No such file or directory
+
+You need to setup your library path to point to the location of your vix-disklib directory (usually in /usr/lib/vmware-vix-disklib/lib64 or /usr/lib/vmware-vix-disklib/lib32).  To do this, execute the following command:
+
+```
+sudo ldconfig /usr/lib/vmware-vix-disklib/lib64/
+```
   
-  For Ubuntu users:
-  * apt-get install pkg-config, python-dev
-  * pip install cython, numpy
-  
-  If you find that when you try to import the module, you get an error something like:
-  ImportError: libvixDiskLibVim.so.1: cannot open shared object file: No such file or directory
-  You need to setup your library path to point to the location of your vix-disklib directory (usually in /usr/lib/vmware-vix-disklib/lib64 or /usr/lib/vmware-vix-disklib/lib32).  To do this, execute the following command:
-  sudo ldconfig /usr/lib/vmware-vix-disklib/lib64/
-  
-  I've found this causes conflicts with other libraries on the system, so what I usually do is:
-  
-  $ cd /usr/lib/vmware-vix-disklib/lib64/
-  $ mkdir removed
-  $ mv libcrypto.so.* libcurl.so.* libglib-* libgobject-* libgthread-* libssl.so.* removed
-  
-  $ echo "/usr/lib/vmware-vix-disklib/lib64" > /etc/ld.so.conf.d/vmware-vix-disklib.conf
-  $ ldconfig
-  
+I've found this causes conflicts with other libraries on the system, so what I usually do is:
+
+```
+$ cd /usr/lib/vmware-vix-disklib/lib64/
+$ mkdir removed
+$ mv libcrypto.so.* libcurl.so.* libglib-* libgobject-* libgthread-* libssl.so.* removed
+
+$ echo "/usr/lib/vmware-vix-disklib/lib64" > /etc/ld.so.conf.d/vmware-vix-disklib.conf
+$ ldconfig
+```
+
 ## Installation
-  This will be uploaded to the Python Package Index when it becomes more stable, but for now you can download the code from github, then run:
-  $ sudo python ./setup.py install
-  
+
+This will be uploaded to the Python Package Index when it becomes more stable, but for now you can download the code from github, then run:
+
+```
+$ sudo python ./setup.py install
+```
+
 ## Features
-  Calling vixDiskLib functions from python of course ;)
+
+Calling vixDiskLib functions from python of course ;)
 
 ## TODO
-  Add in Change Block Tracking
+
+Add in Change Block Tracking
     
 ## Example
-  <pre>
+
+```python
   from vixDiskLib import VixDisk, VixDiskLib_SectorSize, VixDiskOpenFlags, VixCredentials
     
   creds = VixCredentials("vcenter.domain.com", "myusername", "mysecretpassword")
@@ -62,11 +78,12 @@
     
   diskLib.close()
   diskLib.disconnect()
-  </pre>
+```
 
 ## Authors
 
-  * Eric Plaster
+* Eric Plaster
+* Only so
 
 
 ## License 
