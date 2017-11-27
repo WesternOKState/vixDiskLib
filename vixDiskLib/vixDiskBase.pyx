@@ -189,7 +189,7 @@ cdef class VixDiskBase(VixBase):
         
         nbytes = (sectors_to_read * VIXDISKLIB_SECTOR_SIZE)
         
-        if self.buff == None:
+        if not isinstance(self.buff, np.ndarray):
             self.buff = np.empty(nbytes, dtype=DTYPE)
             
         if self.buff.size != nbytes:
